@@ -119,9 +119,10 @@ theorem PEqualNP.Outside.R_meta_2076_512
   have goodUstar : good ⊆ Ustar G C := by
     intro e he
     have heK : e ∈ K.edgeFinset := (Finset.mem_sdiff.mp he).1
-    have hmem := SimpleGraph.edgeFinset_mono hKInside heK
-    rw [SimpleGraph.edgeFinset_deleteEdges] at hmem
-    simpa only [Ustar] using hmem
+    have hmem : e ∈ G.edgeFinset \ starEdges G C := by
+      have hle := SimpleGraph.edgeFinset_mono hKInside heK
+      rwa [SimpleGraph.edgeFinset_deleteEdges] at hle
+    exact hmem
   have goodCond : ∀ (e : Sym2 (Fin n)), e ∈ good → pr e := by
     intro e he
     have heK : e ∈ K.edgeFinset := (Finset.mem_sdiff.mp he).1
